@@ -17,6 +17,15 @@ int _tmain(int argc, _TCHAR* argv[])
 	//创建套接字
 	SOCKET sock = socket(PF_INET, SOCK_DGRAM, 0);
 
+	//绑定套接字
+	struct sockaddr_in clnAddr;
+	memset(&clnAddr, 0, sizeof(clnAddr));  //每个字节都用0填充
+	clnAddr.sin_family = PF_INET;  //使用IPv4地址
+	//servAddr.sin_addr.s_addr = htonl(INADDR_ANY); //自动获取IP地址
+	InetPton(AF_INET, _T("127.0.0.2"), &clnAddr.sin_addr.s_addr);
+	clnAddr.sin_port = htons(59773);  //端口
+	bind(sock, (SOCKADDR*)&clnAddr, sizeof(SOCKADDR));
+
 	//服务器地址信息
 	struct sockaddr_in servAddr;
 	memset(&servAddr, 0, sizeof(servAddr));  //每个字节都用0填充
